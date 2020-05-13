@@ -4,6 +4,18 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
+
+// Routes
+const userRoutes = require('./api/routes/user.route');
+
+
+mongoose.connect('mongodb+srv://ankit:' +
+    process.env.MONGO_ATLAS_PASS +
+    '@node-rest-shop-rdiby.mongodb.net/test?retryWrites=true&w=majority', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
+
 app.use(morgan('dev'));
 app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -19,12 +31,8 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/', (req, res, next) => {
-    return res.status(200).json({
-        message: "hello"
-    });
-});
 
+app.use('/user', userRoutes);
 
 app.use((req, res, next) => {
     const error = new Error('Not Found');
