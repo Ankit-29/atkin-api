@@ -76,8 +76,9 @@ exports.login = (req, res, next) => {
                         email: user[0].email,
                         userId: user[0]._id,
                         name: user[0].name,
+                        type: user[0].type
                     }, process.env.JWT_KEY, {
-                        expiresIn: "24h"
+                        expiresIn: "365d"
                     });
 
                     return res.status(200).json({
@@ -86,6 +87,7 @@ exports.login = (req, res, next) => {
                             email: user[0].email,
                             userId: user[0]._id,
                             name: user[0].name,
+                            type: user[0].type
                         },
                         token: token
                     });

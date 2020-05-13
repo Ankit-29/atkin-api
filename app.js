@@ -7,11 +7,11 @@ const mongoose = require('mongoose');
 
 // Routes
 const userRoutes = require('./api/routes/user.route');
-
+const categoryRoutes = require('./api/routes/category.route');
 
 mongoose.connect('mongodb+srv://ankit:' +
     process.env.MONGO_ATLAS_PASS +
-    '@node-rest-shop-rdiby.mongodb.net/test?retryWrites=true&w=majority', {
+    '@node-rest-shop-rdiby.mongodb.net/atkin?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
@@ -33,6 +33,8 @@ app.use((req, res, next) => {
 
 
 app.use('/user', userRoutes);
+app.use('/category', categoryRoutes);
+
 
 app.use((req, res, next) => {
     const error = new Error('Not Found');
