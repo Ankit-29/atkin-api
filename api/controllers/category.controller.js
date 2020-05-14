@@ -57,26 +57,7 @@ exports.getCategories = (req, res, next) => {
 
 exports.updateCategory = (req, res, next) => {
     const id = req.params.id;
-    Category.update({ _id: id }, { $set: req.body })
-        .exec()
-        .then(result => {
-            res.status(200).json({
-                message: "Category Updated",
-                request: {
-                    type: 'GET',
-                    url: `/category/${id}`
-                }
-            });
-        })
-        .catch(err => {
-            res.status(500).json({ error: err });
-        });
-}
-
-
-exports.updateCategory = (req, res, next) => {
-    const id = req.params.id;
-    Category.update({ _id: id }, { $set: req.body })
+    Category.updateOne({ _id: id }, { $set: req.body })
         .exec()
         .then(result => {
             res.status(200).json({
