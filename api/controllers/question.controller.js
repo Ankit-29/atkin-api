@@ -27,14 +27,14 @@ exports.addQuestion = (req, res, next) => {
                     })
                 }).catch(err => {
                     return res.status(500).json({
-                        error: err
+                        message: err.message
                     })
                 });
 
         }).catch(err => {
             console.log(err);
             return res.status(500).json({
-                error: err
+                message: err.message
             })
         });
 }
@@ -59,7 +59,9 @@ exports.getQuestions = (req, res, next) => {
             res.status(200).json(response);
         })
         .catch(err => {
-            res.status(500).json({ error: err });
+            res.status(500).json({
+                message: err.message
+            });
         });
 }
 
@@ -75,14 +77,54 @@ exports.getQuestionById = (req, res, next) => {
                 });
             } else {
                 res.status(404).json({
-                    error: {
-                        message: "Question Not Found"
-                    }
+                    message: "Question Not Found"
                 });
             }
         })
         .catch(err => {
-            res.status(500).json({ error: err });
+            res.status(500).json({
+                message: err.message
+            });
+        });
+}
+
+
+exports.getQuestionByFilter = (req, res, next) => {
+    let filterArray = [];
+    const filters = {};
+    if (req.query.categories) {
+        filterArray.push({ categories: { $in: req.query.categories } });
+    }
+    if (req.query.qId) {
+        filterArray.push({ qId: req.query.qId });
+    }
+    if (req.query.level) {
+        filterArray.push({ level: req.query.level });
+    }
+    if (filterArray.length > 0) {
+        filters.$or = filterArray;
+    }
+
+    Question.find(filters)
+        .then(docs => {
+            const response = {
+                count: docs.length,
+                questions: docs.map(doc => {
+                    return {
+                        ...doc._doc,
+                        request: {
+                            type: 'GET',
+                            url: `/question/${doc.qId}`
+                        }
+                    }
+                })
+            }
+            res.status(200).json(response);
+        })
+        .catch(err => {
+            res.status(500).json({
+                message: err.message
+            });
         });
 }
 
@@ -105,7 +147,7 @@ exports.updateQuestion = (req, res, next) => {
         });
 }
 
-exports.deleteCategory = (req, res, next) => {
+exports.deleteQuestion = (req, res, next) => {
     const id = req.params.id;
     Question.deleteOne({ qId: id })
         .exec()
@@ -116,9 +158,7 @@ exports.deleteCategory = (req, res, next) => {
                 });
             } else {
                 res.status(404).json({
-                    error: {
-                        message: "Question Not Found"
-                    }
+                    message: "Question Not Found"
                 });
             }
         })

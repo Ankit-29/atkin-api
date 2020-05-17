@@ -37,7 +37,7 @@ exports.getCategories = (req, res, next) => {
         .then(docs => {
             const response = {
                 count: docs.length,
-                products: docs.map(doc => {
+                categories: docs.map(doc => {
                     return {
                         ...doc._doc,
                         request: {
@@ -50,7 +50,7 @@ exports.getCategories = (req, res, next) => {
             res.status(200).json(response);
         })
         .catch(err => {
-            res.status(500).json({ error: err });
+            res.status(500).json({ err });
         });
 }
 
@@ -85,9 +85,7 @@ exports.deleteCategory = (req, res, next) => {
                 });
             } else {
                 res.status(404).json({
-                    error: {
-                        message: "Category Not Found"
-                    }
+                    message: "Category Not Found"
                 });
             }
         })

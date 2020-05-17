@@ -9,10 +9,10 @@ const checkAdmin = require('../middleware/check-admin');
 
 router.post('/', checkAuth, checkAdmin, QuestionController.addQuestion);
 router.get('/', QuestionController.getQuestions);
+router.get('/filter', QuestionController.getQuestionByFilter);
 router.get('/:id', QuestionController.getQuestionById);
-router.patch('/:id', checkAuth, checkAdmin, QuestionController.updateQuestion);
-router.delete('/:id', checkAuth, checkAdmin, QuestionController.deleteCategory);
-
+router.put('/:id', checkAuth, checkAdmin, QuestionController.updateQuestion);
+router.delete('/:id', checkAuth, checkAdmin, QuestionController.deleteQuestion);
 
 
 module.exports = router;
