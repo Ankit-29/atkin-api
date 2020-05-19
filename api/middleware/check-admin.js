@@ -4,9 +4,7 @@ module.exports = (req, res, next) => {
         next()
     } else {
         return res.status(403).json({
-            error: {
-                message: 'Forbidden'
-            }
+            message: 'Forbidden'
         });
     }
 }
