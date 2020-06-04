@@ -9,6 +9,8 @@ const mongoose = require('mongoose');
 const userRoutes = require('./api/routes/user.route');
 const categoryRoutes = require('./api/routes/category.route');
 const questionRoutes = require('./api/routes/question.route');
+const compilerRoutes = require('./api/routes/compiler.route');
+
 
 
 mongoose.connect('mongodb+srv://ankit:' +
@@ -40,6 +42,8 @@ app.use(bodyParser.json());
 app.use('/user', userRoutes);
 app.use('/category', categoryRoutes);
 app.use('/question', questionRoutes);
+app.use('/compiler', compilerRoutes);
+
 
 
 
