@@ -4,7 +4,7 @@ const judge0ApiEndpoint = 'http://localhost:85';
 
 
 exports.compile = (req, res, next) => {
-    console.log("asd");
+    console.log(req.body);
     const submission = {
         source_code: req.body.sourceCode,
         language_id: req.body.languageId,
@@ -15,6 +15,18 @@ exports.compile = (req, res, next) => {
         method: 'post',
         url: `${judge0ApiEndpoint}/submissions/?base64_encoded=false&wait=true`, 
         data : submission,   
+    }).then(response => {
+        return res.status(200).send(response.data);
+    }).catch(error => {
+        return res.status(500).send(error);
+    });
+}   
+
+
+exports.languages = (req, res, next) => {
+    axios({
+        method: 'get',
+        url: `${judge0ApiEndpoint}/languages`,   
     }).then(response => {
         return res.status(200).send(response.data);
     }).catch(error => {
