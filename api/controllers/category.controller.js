@@ -54,6 +54,24 @@ exports.getCategories = (req, res, next) => {
         });
 }
 
+exports.getCategoryById = (req, res, next) => {
+    Category.find({ _id: req.params.id })
+        .then(category => {
+            if (category.length >= 1) {
+                res.status(200).json({
+                    ...category[0]._doc,
+                });
+            } else {
+                res.status(404).json({
+                    message: "Category Not Found"
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).json({ err });
+        });
+}
+
 
 exports.updateCategory = (req, res, next) => {
     const id = req.params.id;
