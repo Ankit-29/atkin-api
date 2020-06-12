@@ -11,7 +11,7 @@ const checkAdmin = require('../middleware/check-admin');
 router.post('/', checkAuth, checkAdmin, CategoryController.createCategory);
 router.get('/', CategoryController.getCategories);
 router.get('/:id', CategoryController.getCategoryById);
-router.patch('/:id', checkAuth, checkAdmin, CategoryController.updateCategory);
+router.put('/:id', checkAuth, checkAdmin, CategoryController.updateCategory);
 router.delete('/:id', checkAuth, checkAdmin, CategoryController.deleteCategory);
 
 
