@@ -6,10 +6,13 @@ const userSchema = mongoose.Schema({
     email: {
         type: String,
         required: true,
-        match: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        // match: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     },
     password: { type: String, required: true },
-    type: { type: Number, default: 2 } // 1 -> Admin, 2 -> User 
+    type: { type: Number, default: 2 }, // 1 -> Admin, 2 -> User 
+    solvedQuestions: {
+        type: [{ type: Number }],
+    }
 });
 
 

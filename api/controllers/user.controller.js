@@ -76,7 +76,7 @@ exports.login = (req, res, next) => {
                         email: user[0].email,
                         userId: user[0]._id,
                         name: user[0].name,
-                        type: user[0].type
+                        type: user[0].type,
                     }, process.env.JWT_KEY, {
                         expiresIn: "365d"
                     });
@@ -102,5 +102,24 @@ exports.login = (req, res, next) => {
             return res.status(500).json({
                 error: err
             })
+        });
+}
+
+
+exports.solvedQuestions = (req, res, next) => {
+    User.find({ email: req.userData.email })
+        .then(user => {
+            if (user.length == 1) {
+                res.status(200).json({
+                    solvedQuestions: user[0].solvedQuestions 
+                });
+            } else {
+                res.status(404).json({
+                    message: "Solved Question Not Found"
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).json({ err });
         });
 }
