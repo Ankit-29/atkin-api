@@ -123,3 +123,17 @@ exports.solvedQuestions = (req, res, next) => {
             res.status(500).json({ err });
         });
 }
+
+
+exports.updateSolvedQuestion = (req, res, next) => {
+    User.updateOne({ email: req.userData.email }, { $set: req.body })
+        .exec()
+        .then(result => {
+            res.status(200).json({
+                message: "Question Solved",
+            });
+        })
+        .catch(err => {
+            res.status(500).json({ error: err });
+        });
+}
